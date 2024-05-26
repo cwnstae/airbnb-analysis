@@ -69,32 +69,54 @@ selected_listings
 <img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Listings-2-1.png">
 
 ```python
-df_calendar = pd.read_excel(current_path + "\Tableau Full Project.xlsx",sheet_name="Calendar")
+df_calendar = pd.read_csv(current_path + "\data - calendar.csv")
+df_calendar["available"] = df_calendar["available"].astype(bool) # convert to boolean datatype
+df_calendar.to_csv(current_path + "\data - calendar_1.csv", index=False)
 df_calendar.info()
 df_calendar
 ```
 
 ```
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 1048575 entries, 0 to 1048574
-Data columns (total 4 columns):
- #   Column      Non-Null Count    Dtype         
----  ------      --------------    -----         
- 0   listing_id  1048575 non-null  int64         
- 1   date        1048575 non-null  datetime64[ns]
- 2   available   1048575 non-null  object        
- 3   price       699862 non-null   float64       
-dtypes: datetime64[ns](1), float64(1), int64(1), object(1)
-memory usage: 32.0+ MB
+RangeIndex: 144175 entries, 0 to 144174
+Data columns (total 7 columns):
+ #   Column          Non-Null Count   Dtype  
+---  ------          --------------   -----  
+ 0   listing_id      144175 non-null  int64  
+ 1   date            144175 non-null  object 
+ 2   available       144175 non-null  bool   
+ 3   price           144175 non-null  object 
+ 4   adjusted_price  0 non-null       float64
+ 5   minimum_nights  144175 non-null  int64  
+ 6   maximum_nights  144175 non-null  int64  
+dtypes: bool(1), float64(1), int64(3), object(2)
+memory usage: 6.7+ MB
 ```
-<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Calendar-1.png">
+<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Calendar-1-1.png">
 
 ```python
-df_reviews = pd.read_excel(current_path + "\Tableau Full Project.xlsx",sheet_name="Reviews")
-df_reviews.to_csv(current_path + "\data - reviews.csv", index=False)
+df_reviews = pd.read_csv(current_path + "\data - reviews.csv")
+df_reviews.info()
 df_reviews
 ```
-<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Reviews-1.png">
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 22410 entries, 0 to 22409
+Data columns (total 6 columns):
+ #   Column         Non-Null Count  Dtype 
+---  ------         --------------  ----- 
+ 0   listing_id     22410 non-null  int64 
+ 1   id             22410 non-null  int64 
+ 2   date           22410 non-null  object
+ 3   reviewer_id    22410 non-null  int64 
+ 4   reviewer_name  22410 non-null  object
+ 5   comments       22404 non-null  object
+dtypes: int64(3), object(3)
+memory usage: 1.0+ MB
+```
+
+
+<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Reviews-1-1.png">
 
 ## Creating Database
 Before going further, as I mentioned earlier, I intend to use SQL to manipulate the data. In this section, I have already prepared the necessary setup using PostgreSQL. However, we won't focus on that right now. The table I created is detailed below.
@@ -102,37 +124,41 @@ Before going further, as I mentioned earlier, I intend to use SQL to manipulate 
 -- Create listings table
 CREATE TABLE public.listings
 (
-    id INT PRIMARY KEY,
-    bathrooms NUMERIC,
-    number_of_reviews INT,
+    id BIGINT PRIMARY KEY,
     latitude NUMERIC,
     longitude NUMERIC,
     room_type TEXT,
-    country TEXT,
+    bathrooms NUMERIC,
     bedrooms NUMERIC,
+    number_of_reviews INT,
     price NUMERIC
 );
 
 -- Create calendar table
 CREATE TABLE public.calendar
 (
-    listing_id INT,
+    listing_id BIGINT,
     date DATE,
     available BOOLEAN,
     price NUMERIC,
+    adjusted_price NUMERIC,
+    minimum_nights INT,
+    maximum_nights INT,
     FOREIGN KEY (listing_id) REFERENCES public.listings (id)
 );
 
 -- Create reviews table
 CREATE TABLE public.reviews
 (
-    id INT,
-    listing_id INT,
+    listing_id BIGINT,
+    id BIGINT PRIMARY KEY,
     date DATE,
     reviewer_id INT,
     reviewer_name TEXT,
-    comments TEXT
+    comments TEXT,
+    FOREIGN KEY (listing_id) REFERENCES public.listings (id)
 );
+
 ```
 ## Exporing Data by SQL
 I will use Python code to execute SQL queries. Let's set everything up.
@@ -150,6 +176,8 @@ query = """
 df_read_sql = pd.read_sql(query,engine)
 df_read_sql
 ```
-<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-SQL-1.png">
-Everything is perfectly ready to get started.
+<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-SQL-1-1.png">
+Everything looks perfect ready to get started.
+
+###
 
