@@ -179,5 +179,51 @@ df_read_sql
 <img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-SQL-1-1.png">
 Everything looks perfect ready to get started.
 
-###
+## We'll be exploring what factors influence price differences.
+### Room Type
+```python
+query = """
+SELECT
+    room_type,
+    COUNT(*) as total_listed_room,
+    ROUND(AVG(price),2) AS price_avg
+FROM listings
+WHERE price IS NOT NULL
+GROUP BY room_type
+;
+"""
+df_read_sql = pd.read_sql(query,engine)
+df_read_sql
+```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>room_type</th>
+      <th>total_listed_room</th>
+      <th>price_avg</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Entire home/apt</td>
+      <td>283</td>
+      <td>142.10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Shared room</td>
+      <td>2</td>
+      <td>75.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Private room</td>
+      <td>93</td>
+      <td>84.06</td>
+    </tr>
+  </tbody>
+</table>
+
 
