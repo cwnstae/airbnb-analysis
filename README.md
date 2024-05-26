@@ -1,4 +1,4 @@
-![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/d0dfde11-7a3a-45ee-97bb-ec3cb6c9d327)# Introduction
+# Introduction
 Welcome to this Airbnb analysis, designed to showcase the comprehensive skills required for data analytics. In this project, I will utilize various tools to manipulate the "Airbnb Listings 2016 Dataset" provided by Alex The Analyst ([link](https://www.kaggle.com/datasets/alexanderfreberg/airbnb-listings-2016-dataset)).
 
 ## What you will see
