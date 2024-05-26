@@ -160,8 +160,46 @@ df_reviews = pd.read_excel(current_path + "\Tableau Full Project.xlsx",sheet_nam
 df_reviews.to_csv(current_path + "\data - reviews.csv", index=False)
 df_reviews
 ```
-
 <img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Reviews-1.png">
+
+## Creating Database
+Before going further, as I mentioned earlier, I intend to use SQL to manipulate the data. In this section, I have already prepared the necessary setup using PostgreSQL. However, we won't focus on that right now. The table I created is detailed below.
+```sql
+-- Create listings table
+CREATE TABLE public.listings
+(
+    id INT PRIMARY KEY,
+    bathrooms NUMERIC,
+    number_of_reviews INT,
+    latitude NUMERIC,
+    longitude NUMERIC,
+    room_type TEXT,
+    country TEXT,
+    bedrooms NUMERIC,
+    price NUMERIC
+);
+
+-- Create calendar table
+CREATE TABLE public.calendar
+(
+    listing_id INT,
+    date DATE,
+    available BOOLEAN,
+    price NUMERIC,
+    FOREIGN KEY (listing_id) REFERENCES public.listings (id)
+);
+
+-- Create reviews table
+CREATE TABLE public.reviews
+(
+    id INT,
+    listing_id INT,
+    date DATE,
+    reviewer_id INT,
+    reviewer_name TEXT,
+    comments TEXT
+);
+```
 
 
 
