@@ -200,6 +200,22 @@ CREATE TABLE public.reviews
     comments TEXT
 );
 ```
+## Exporing Data by SQL
+I will use Python code to execute SQL queries. Let's set everything up.
+```python
+# Make connection with PostgresSQL server
+con_string = f"postgresql://postgres:{encoded_password}@localhost:5432/Airbnb"
+engine = create_engine(con_string)
+```
 
-
+```python
+query = """
+    SELECT *
+    FROM listings;
+"""
+df_read_sql = pd.read_sql(query,engine)
+df_read_sql
+```
+<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-SQL-1.png">
+Everything is perfectly ready to get started.
 
