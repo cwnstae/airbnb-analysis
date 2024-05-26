@@ -1049,4 +1049,7 @@ df_read_sql
 </table>
 </div>
 
-
+There are 3 types of room:
+ - Entire Home/Apartment: This category dominates with 283 listings and commands the highest average price of $142.10 per stay.
+ - Private Room: Although less common, there are 93 private room listings, priced at an average of $84.06 half the cost of entire homes/apartments
+ - Shared Room: The least prevalent, with only 2 listings, but offers the most economical stays at an average price of $75.00.
