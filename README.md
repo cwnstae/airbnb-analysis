@@ -1053,3 +1053,77 @@ There are 3 types of room:
  - Entire Home/Apartment: This category dominates with 283 listings and commands the highest average price of $142.10 per stay.
  - Private Room: Although less common, there are 93 private room listings, priced at an average of $84.06 half the cost of entire homes/apartments
  - Shared Room: The least prevalent, with only 2 listings, but offers the most economical stays at an average price of $75.00.
+### Number of Bedroom Type
+```python
+query = """
+SELECT
+    bedrooms,
+    COUNT(*) as total_listed_room,
+    ROUND(AVG(price),2) AS price_avg,
+    SUM(price) as total_revenue
+FROM listings
+WHERE bedrooms > 0 AND price IS NOT NULL
+GROUP BY bedrooms
+ORDER BY bedrooms
+;
+"""
+df_read_sql = pd.read_sql(query,engine)
+df_read_sql
+```
+<div>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bedrooms</th>
+      <th>total_listed_room</th>
+      <th>price_avg</th>
+      <th>total_revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>211</td>
+      <td>90.21</td>
+      <td>19034.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.0</td>
+      <td>84</td>
+      <td>129.68</td>
+      <td>10893.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.0</td>
+      <td>41</td>
+      <td>191.93</td>
+      <td>7869.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.0</td>
+      <td>16</td>
+      <td>222.94</td>
+      <td>3567.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>9</td>
+      <td>496.11</td>
+      <td>4465.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>7.0</td>
+      <td>1</td>
+      <td>807.00</td>
+      <td>807.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
