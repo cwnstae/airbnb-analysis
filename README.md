@@ -1017,7 +1017,7 @@ df_read_sql = pd.read_sql(query,engine)
 df_read_sql
 ```
 <div>
-<table border="1" class="dataframe">
+<table class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
