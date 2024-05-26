@@ -1054,6 +1054,7 @@ There are 3 types of room:
  - Private Room: Although less common, there are 93 private room listings, priced at an average of $84.06 half the cost of entire homes/apartments
  - Shared Room: The least prevalent, with only 2 listings, but offers the most economical stays at an average price of $75.00.
 ### Number of Bedroom
+
 ```python
 query = """
 SELECT
@@ -1070,6 +1071,7 @@ ORDER BY bedrooms
 df_read_sql = pd.read_sql(query,engine)
 df_read_sql
 ```
+
 <div>
 <table class="dataframe">
   <thead>
@@ -1127,3 +1129,11 @@ df_read_sql
   </tbody>
 </table>
 </div>
+
+There are number of bedrooms 1 - 7 rooms:
+ - Single Bedroom (1 room): Despite having the lowest average price at $90.21, it generates the highest total revenue.
+ - As the number of bedrooms increases, the average price rises, but the total revenue decreases.
+ - In summary:
+    - 1 bedroom: Lowest price, highest revenue.
+    - Increasing bedrooms: Higher prices, lower revenue.
+
