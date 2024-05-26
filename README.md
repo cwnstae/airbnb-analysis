@@ -161,4 +161,7 @@ df_reviews.to_csv(current_path + "\data - reviews.csv", index=False)
 df_reviews
 ```
 
+<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Reviews-1.png">
+
+
 
