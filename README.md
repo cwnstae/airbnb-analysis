@@ -1,4 +1,4 @@
-# Introduction
+![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/d0dfde11-7a3a-45ee-97bb-ec3cb6c9d327)# Introduction
 Welcome to this Airbnb analysis, designed to showcase the comprehensive skills required for data analytics. In this project, I will utilize various tools to manipulate the "Airbnb Listings 2016 Dataset" provided by Alex The Analyst ([link](https://www.kaggle.com/datasets/alexanderfreberg/airbnb-listings-2016-dataset)).
 
 ## What you will see
@@ -121,8 +121,44 @@ dtypes: datetime64[ns](5), float64(23), int64(15), object(49)
 memory usage: 2.7+ MB
 
 ```
-There are a total of 91 columns, but we don't need all of them. For example, the picture below shows some columns that contain long description contents, which we will not use.
+There are a total of 92 columns, but we don't need all of them. For example, the picture below shows some columns that contain long description contents, which we will not use.
 
 <img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Listings-1.png">
+
+```python
+# The listings has 92 columns, select some columns
+selected_listings = df_listings.copy()
+selected_listings = selected_listings[["id","bathrooms","number_of_reviews","latitude","longitude","room_type","country","bedrooms","price"]]
+selected_listings.to_csv(current_path + "\data - selected_listings.csv",index=False) # Export to csv for creating SQL database
+selected_listings
+```
+<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Listings-2.png">
+
+```python
+df_calendar = pd.read_excel(current_path + "\Tableau Full Project.xlsx",sheet_name="Calendar")
+df_calendar.info()
+df_calendar
+```
+
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1048575 entries, 0 to 1048574
+Data columns (total 4 columns):
+ #   Column      Non-Null Count    Dtype         
+---  ------      --------------    -----         
+ 0   listing_id  1048575 non-null  int64         
+ 1   date        1048575 non-null  datetime64[ns]
+ 2   available   1048575 non-null  object        
+ 3   price       699862 non-null   float64       
+dtypes: datetime64[ns](1), float64(1), int64(1), object(1)
+memory usage: 32.0+ MB
+```
+<img src="https://raw.githubusercontent.com/cwnstae/cwnstae.github.io/main/assets/Pic-Calendar-1.png">
+
+```python
+df_reviews = pd.read_excel(current_path + "\Tableau Full Project.xlsx",sheet_name="Reviews")
+df_reviews.to_csv(current_path + "\data - reviews.csv", index=False)
+df_reviews
+```
 
 
