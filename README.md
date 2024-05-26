@@ -8,3 +8,6 @@ In this showcase, I will cover various methods to tackle this large dataset, inc
  - Python (pandas): The primary tool I use to manipulate and format the data.
  - SQL: Used to create a database and demonstrate querying for data exploration.
  - Tableau: Utilized to interpret and present the insightful data in an understandable manner through graphs and dashboards.
+
+# Loading and exporing data
+In this section we will load the data and explore to see the detail before analysis and find the way to deal with dirty-data and formating it into usable data. the dataset we use is <table><tr><td>Tableau Full Project.xlsx</td></tr></table>
