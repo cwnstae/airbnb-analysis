@@ -121,4 +121,5 @@ dtypes: datetime64[ns](5), float64(23), int64(15), object(49)
 memory usage: 2.7+ MB
 
 ```
-
+There are a total of 91 columns, but we don't need all of them. For example, the picture below shows some columns that contain long description contents, which we will not use.
+<img width="1470" alt="code" src="https://github.com/cwnstae/cwnstae.github.io/blob/main/assets/Pic-Listings-1.png">
