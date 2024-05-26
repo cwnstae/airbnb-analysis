@@ -1,8 +1,4 @@
----
-layout: default
----
-
-# IntroductionSS
+# Airbnb Analysis
 Welcome to this Airbnb analysis, designed to showcase the comprehensive skills required for data analytics. In this project, I will utilize various tools to manipulate the "Airbnb Listings 2016 Dataset" provided by Alex The Analyst ([link](https://www.kaggle.com/datasets/alexanderfreberg/airbnb-listings-2016-dataset)).
 
 ## What you will see
