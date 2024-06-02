@@ -1198,6 +1198,10 @@ plt.show()
 
 ```
 ![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/cd8f1fab-5fde-40c7-a5ae-9f66549f94fe)
+![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/a9efd76d-c2c4-4b55-b8f9-9aa78ada0841)
+![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/c0a1edf4-e003-4722-9157-23a96245887b)
+
+
 
 
 Insights and Recommendations:
