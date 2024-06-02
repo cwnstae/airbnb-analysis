@@ -1058,30 +1058,50 @@ There are 3 types of room:
 
 ```python
 query = """
+WITH BedroomCounts AS (
+    SELECT
+        bedrooms,
+        COUNT(*) AS count_listings,
+        ROUND(AVG(price),2) AS price_avg,
+        SUM(price) as total_revenue
+    FROM listings
+    WHERE price IS NOT NULL AND bedrooms > 0
+    GROUP BY bedrooms
+)
 SELECT
-    bedrooms,
-    COUNT(*) as total_listed_room,
-    ROUND(AVG(price),2) AS price_avg,
-    SUM(price) as total_revenue
-FROM listings
-WHERE bedrooms > 0 AND price IS NOT NULL
-GROUP BY bedrooms
+    *,
+    (count_listings)* 100.0 / SUM(count_listings) OVER () AS percentage
+FROM BedroomCounts
 ORDER BY bedrooms
 ;
 """
 df_read_sql = pd.read_sql(query,engine)
-df_read_sql
+df = df_read_sql.copy()
+df
 ```
-
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
       <th>bedrooms</th>
-      <th>total_listed_room</th>
+      <th>count_listings</th>
       <th>price_avg</th>
       <th>total_revenue</th>
+      <th>percentage</th>
     </tr>
   </thead>
   <tbody>
@@ -1091,6 +1111,7 @@ df_read_sql
       <td>211</td>
       <td>90.21</td>
       <td>19034.0</td>
+      <td>58.287293</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1098,6 +1119,7 @@ df_read_sql
       <td>84</td>
       <td>129.68</td>
       <td>10893.0</td>
+      <td>23.204420</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1105,6 +1127,7 @@ df_read_sql
       <td>41</td>
       <td>191.93</td>
       <td>7869.0</td>
+      <td>11.325967</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1112,6 +1135,7 @@ df_read_sql
       <td>16</td>
       <td>222.94</td>
       <td>3567.0</td>
+      <td>4.419890</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1119,6 +1143,7 @@ df_read_sql
       <td>9</td>
       <td>496.11</td>
       <td>4465.0</td>
+      <td>2.486188</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1126,15 +1151,61 @@ df_read_sql
       <td>1</td>
       <td>807.00</td>
       <td>807.0</td>
+      <td>0.276243</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-There are number of bedrooms 1 - 7 rooms:
- - Single Bedroom (1 room): Despite having the lowest average price at $90.21, it generates the highest total revenue.
- - As the number of bedrooms increases, the average price rises, but the total revenue decreases.
- - In summary:
-    - 1 bedroom: Lowest price, highest revenue.
-    - Increasing bedrooms: Higher prices, lower revenue.
+```python
+# Plot 1: Distribution of Listings by Number of Bedrooms with Percentage as Labels
+fig, ax1 = plt.subplots(figsize=(10, 5))
+
+# Primary y-axis: Count of Listings
+bars = ax1.bar(df["bedrooms"], df["count_listings"], color='maroon', width=0.4)
+ax1.set_xlabel("Number of Bedrooms")
+ax1.set_ylabel("Count of Listings", color='maroon')
+ax1.set_title("Distribution of Listings by Number of Bedrooms with Percentage")
+ax1.set_ylim(0, 230)  # Set y-axis limit to 230
+
+# Adding labels to the bars with percentage
+for bar, perc in zip(bars, df["percentage"]):
+    height = bar.get_height()
+    ax1.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height}\n({perc:.2f}%)', ha='center', va='bottom', color='black')
+plt.show()
+
+# Plot 2: Average Price per Listing by Number of Bedrooms
+plt.figure(figsize=(10, 5))
+bars = plt.bar(df["bedrooms"], df["price_avg"], color='blue', width=0.4)
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height:.2f}', ha='center', va='bottom')
+plt.xlabel("Number of Bedrooms")
+plt.ylabel("Average Price per Listing")
+plt.title("Average Price per Listing by Number of Bedrooms")
+plt.show()
+
+# Plot 3: Total Revenue by Number of Bedrooms
+plt.figure(figsize=(10, 5))
+bars = plt.bar(df["bedrooms"], df["total_revenue"], color='green', width=0.4)
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height:.2f}', ha='center', va='bottom')
+plt.xlabel("Number of Bedrooms")
+plt.ylabel("Total Revenue")
+plt.title("Total Revenue by Number of Bedrooms")
+plt.show()
+
+```
+![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/cd8f1fab-5fde-40c7-a5ae-9f66549f94fe)
+
+
+Insights and Recommendations:
+ - High Demand for Smaller Units: The data suggests that there is a high demand for smaller units, particularly 1-bedroom and 2-bedroom listings. These should be a focus for marketing and investment.
+ - Premium Pricing for Larger Units: Listings with more bedrooms command a higher average price. However, their lower frequency and total revenue indicate that they cater to a niche market.
+ - Revenue Maximization: While 1-bedroom listings generate the most total revenue, 5-bedroom 
+listings also generate a significant amount of revenue per listing. Consider strategies to optimize occupancy rates for larger units to maximize their revenue potential.
+- Market Strategy: Given the high percentage of 1-bedroom listings, competitive pricing and unique selling points (e.g., amenities, location) can help differentiate these listings in the market.
+
+
 
