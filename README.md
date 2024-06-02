@@ -7,7 +7,6 @@ In this showcase, I will cover various methods to tackle this large dataset, inc
 ## Key skills showcased
  - Python (pandas): The primary tool I use to manipulate and format the data.
  - SQL: Used to create a database and demonstrate querying for data exploration.
- - Tableau: Utilized to interpret and present the insightful data in an understandable manner through graphs and dashboards.
 
 # Loading and exporing data
 In this section, we will load the data and explore it to understand the details before conducting any analysis. We will identify and handle dirty data, and format it into usable data. The dataset we are using is `listings.csv`, `calendar.csv`, and `reviews,csv`.
@@ -1329,9 +1328,9 @@ Seasonal Variations: Observe any seasonal patterns within the year.:
 
 
 ## Summary
-In this showcase, I utilize various tools and techniques to dig into the Airbnb dataset. From cleaning and formatting data with Python's pandas to setting up databases and running SQL queries, I handle data complexities with precision. I also use Tableau to create visuals that not only explain but also make insights easy to understand through graphs and dashboards.
+In this showcase, I utilize various tools and techniques to dig into the dataset. From cleaning and formatting data with Python's pandas to setting up databases and running SQL queries, I handle data complexities with precision. I also create visuals that not only explain but also make insights easy to understand through graphs.
 
-By demonstrating my skills in Python, SQL, and Tableau, this project highlights the key abilities needed for effective data analysis. My aim is to offer a clear story that not only explains the details of the Airbnb dataset but also encourages others to explore and analyze data further in the field of data science.
+By demonstrating my skills in Python, and SQL, this project highlights the key abilities needed for effective data analysis. My aim is to offer a clear story that not only explains the details of the dataset but also encourages others to explore and analyze data further in the field of data science.
 
 
 
