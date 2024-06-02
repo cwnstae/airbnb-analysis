@@ -1080,19 +1080,6 @@ df = df_read_sql.copy()
 df
 ```
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1210,6 +1197,136 @@ Insights and Recommendations:
  - Revenue Maximization: While 1-bedroom listings generate the most total revenue, 5-bedroom 
 listings also generate a significant amount of revenue per listing. Consider strategies to optimize occupancy rates for larger units to maximize their revenue potential.
 - Market Strategy: Given the high percentage of 1-bedroom listings, competitive pricing and unique selling points (e.g., amenities, location) can help differentiate these listings in the market.
+
+
+### The Current Price and Each Day of Next 365 Days
+
+```python
+query = """
+SELECT
+    date,
+    AVG(price) AS price_average
+FROM calendar
+GROUP BY date
+ORDER BY date;
+"""
+df_read_sql = pd.read_sql(query,engine)
+df = df_read_sql.copy()
+df
+```
+
+<div>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>price_average</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2024-04-08</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2024-04-09</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2024-04-10</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2024-04-11</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2024-04-12</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>360</th>
+      <td>2025-04-03</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>361</th>
+      <td>2025-04-04</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>362</th>
+      <td>2025-04-05</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>363</th>
+      <td>2025-04-06</td>
+      <td>141.273418</td>
+    </tr>
+    <tr>
+      <th>364</th>
+      <td>2025-04-07</td>
+      <td>141.273418</td>
+    </tr>
+  </tbody>
+</table>
+<p>365 rows × 2 columns</p>
+</div>
+
+![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/dccc584a-d31c-442d-a310-de3f87721930)
+
+The data I'm using is the most recent (April 2024), and it doesn't provide the future prices of the hosts. I think if I use the data from last year (2023), this data exploration might be useful.
+
+Let me try if I correct, by using data from June 2023 and observing the prices for the next 365 days.
+
+```python
+df_calendar_Jun = pd.read_csv(current_path + "\calendar_Jun23.csv")
+df_calendar_Jun["available"] = df_calendar["available"].astype(bool) # convert to boolean datatype
+ # clean data from $5,500.00 to 5500.0
+df_calendar_Jun["price"] = df_calendar_Jun["price"].str.replace("$","")
+df_calendar_Jun["price"] = df_calendar_Jun["price"].str.replace(",","")
+df_calendar_Jun["price"] = df_calendar_Jun["price"].astype(float)
+df_calendar_Jun['date'] = pd.to_datetime(df_calendar_Jun['date'])
+# Sort the dataframe by date
+df_calendar_Jun = df_calendar_Jun.sort_values('date')
+# Group by 'date' and calculate the average price for each date
+average_prices = df_calendar_Jun.groupby('date')['price'].mean().reset_index()
+
+plt.figure(figsize=(20,8))
+
+# Plot the lineplot
+sns.lineplot(data=average_prices, x="date", y="price")
+
+# Set x-axis label to every week
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+
+# Rotate the x-axis labels for better readability
+plt.xticks(rotation=45)
+
+plt.show()
+```
+
+![image](https://github.com/cwnstae/airbnb-analysis/assets/24621204/b4f2ae21-4fd4-45d0-bfea-be8a6470f617)
+
+Okay, now we can gain insight into the price trends starting from June 2023 and observe how they evolve over the next 365 days.
+Seasonal Variations: Observe any seasonal patterns within the year.:
+ - Summer months (around mid-year) might show higher prices due to increased demand.
+ - Winter months (end of the year) could exhibit stable or slightly lower prices.
+
+
 
 
 
