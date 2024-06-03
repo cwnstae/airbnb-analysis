@@ -1,3 +1,5 @@
+[Visit to see my portfolio [Link]](https://cwnstae.github.io/data-analytic-portfolio/).
+
 # Airbnb Analysis
 Welcome to this Airbnb analysis, designed to showcase the comprehensive skills required for data analytics. In this project, I will utilize various tools to manipulate the "Insight Airbnb Dataset 8 Apr 2024" ([link](https://insideairbnb.com/get-the-data/)). Airbnb listings are created by hosts who want to rent out their properties to travelers and other short-term guests. The listings can vary widely in terms of type, price, location, and amenities offered.
 
